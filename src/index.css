@@ -67,7 +67,7 @@ section.word-box {
   color: #f5f1d9;
   justify-content: center;
   gap: 2px;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 }
 
 section.word-box > span {
@@ -81,3 +81,21 @@ section.word-box > span {
 
 }
 
+section.alphabets-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  max-width: 550px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+section.alphabets-chips > button {
+  height: 50px;
+  width: 50px;
+  border: 1px solid #979591;
+  background-color: #f2bd4b;
+  border-radius: 5px;
+}

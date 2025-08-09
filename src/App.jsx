@@ -20,6 +20,12 @@ const App = () => {
     )
   })
 
+  const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const alphabetElement = alphabets.split("").map(letter => {
+    return (
+      <button key={letter}>{letter}</button>
+    )
+  })
 
   return (
     <main>
@@ -30,6 +36,12 @@ const App = () => {
       </section>
       <section className="languages-chips">
         {languageElement}
+      </section>
+      <section className="word-box">
+        {wordElement}
+      </section>
+      <section className="alphabets-chips">
+        {alphabetElement}
       </section>
     </main>
   )
