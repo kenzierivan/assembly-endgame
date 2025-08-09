@@ -13,6 +13,14 @@ const App = () => {
     )
   })
 
+  const [currentWord, setCurrentWord] = useState("react")
+  const wordElement = currentWord.split("").map((letter, index) => {
+    return (
+      <span className="letter-box" key={index}>{letter.toUpperCase()}</span>
+    )
+  })
+
+
   return (
     <main>
       <Header />

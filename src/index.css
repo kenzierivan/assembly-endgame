@@ -62,3 +62,22 @@ section.languages-chips > span {
   padding: 4px 6px;
 }
 
+section.word-box {
+  display: flex;
+  color: #f5f1d9;
+  justify-content: center;
+  gap: 2px;
+  margin-bottom: 60px;
+}
+
+section.word-box > span {
+  height: 40px;
+  width: 40px;
+  display: flex;
+  background-color: #323232;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #F9F4DA;
+
+}
+
