@@ -37,11 +37,28 @@ section.game-status {
   padding-block: 5px;
 }
 
-section.game-status h1 {
+section.game-status > h1 {
   margin: 5px;
   font-size: 1.25rem;
 }
 
-section.game-status p {
+section.game-status > p {
   margin: 5px;
 }
+
+section.languages-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-block: 30px;
+  max-width: 700px;
+}
+
+section.languages-chips > span {
+  display: flex;
+  border-radius: 5px;
+  padding: 4px 6px;
+}
+
