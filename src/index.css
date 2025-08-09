@@ -98,4 +98,6 @@ section.alphabets-chips > button {
   border: 1px solid #979591;
   background-color: #f2bd4b;
   border-radius: 5px;
+  font-size: 1.15rem;
+  font-weight: 600;
 }
