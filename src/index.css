@@ -60,6 +60,21 @@ section.languages-chips > span {
   display: flex;
   border-radius: 5px;
   padding: 4px 6px;
+  position: relative;
+}
+
+section.languages-chips > span.lost::before {
+  content: "💀";
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  font-size: 0.85rem;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.7);
 }
 
 section.word-box {
@@ -100,4 +115,24 @@ section.alphabets-chips > button {
   border-radius: 5px;
   font-size: 1.15rem;
   font-weight: 600;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.new-game {
+  display: block;
+  border: 1px solid #D7D7D7;
+  border-radius: 4px;
+  width: 225px;
+  height: 40px;
+  padding: 6px 12px;
+  margin-inline: auto;
+  cursor: pointer;
+  background-color: #3FA9F5;
+  font-size: 1rem;
+  font-weight: 500;
 }

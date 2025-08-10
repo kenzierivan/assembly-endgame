@@ -9,17 +9,21 @@ const App = () => {
 
   //Derived values
   const wrongGuessCount = guessedLetters.filter(letter => !currentWord.includes(letter)).length;
+  const isGameWon = currentWord.split("").every(letter => guessedLetters.includes(letter));
+  const isGameLost = wrongGuessCount > languages.length - 1;
+  const isGameOver = isGameWon || isGameLost;
 
   //Static values
   const alphabets = "abcdefghijklmnopqrstuvwxyz";
 
-  const languageElement = languages.map(language => {
+  const languageElement = languages.map((language, index) => {
+    const isLanguageLost = index < wrongGuessCount
     const styles = {
       backgroundColor: language.backgroundColor,
       color: language.color,
     };
     return (
-      <span key={language.name} style={styles}>{language.name}</span>
+      <span key={language.name} style={styles} className={isLanguageLost ? "lost" : null}>{language.name}</span>
     )
   })
 
@@ -62,6 +66,9 @@ const App = () => {
       <section className="alphabets-chips">
         {alphabetElement}
       </section>
+      <div className="button-container">
+        {isGameOver ? <button className="new-game">New Game</button> : null}
+      </div>
     </main>
   )
 }
