@@ -1,10 +1,13 @@
 import { useState } from "react";
 import Header from "./components/Header"
 import { languages } from "./languages"
+import { clsx } from 'clsx';
+import { getFarewellText, getRandomWord } from "./utils";
+import Confetti from 'react-confetti'
 
 const App = () => {
   //State values
-  const [currentWord, setCurrentWord] = useState("react")
+  const [currentWord, setCurrentWord] = useState(() => getRandomWord())
   const [guessedLetters, setGuessedLetters] = useState([]);
 
   //Derived values
@@ -12,6 +15,8 @@ const App = () => {
   const isGameWon = currentWord.split("").every(letter => guessedLetters.includes(letter));
   const isGameLost = wrongGuessCount > languages.length - 1;
   const isGameOver = isGameWon || isGameLost;
+  const lastGuessedLetter = guessedLetters[guessedLetters.length - 1];
+  const isLastGuessIncorrect = lastGuessedLetter && !currentWord.includes(lastGuessedLetter);
 
   //Static values
   const alphabets = "abcdefghijklmnopqrstuvwxyz";
@@ -29,15 +34,20 @@ const App = () => {
 
 
   const wordElement = currentWord.split("").map((letter, index) => {
-    const isGuessed = guessedLetters.includes(letter);
+    const shouldRevealLetter = isGameLost || guessedLetters.includes(letter);
     return (
-      <span className="letter-box" key={index}>{isGuessed ? letter.toUpperCase() : ""}</span>
+      <span className="letter-box" key={index}>{shouldRevealLetter ? letter.toUpperCase() : ""}</span>
     )
   })
 
 
   function guessLetter(letter) {
     setGuessedLetters(prev => prev.includes(letter) ? prev : [...prev, letter]);
+  }
+
+  function startNewGame() {
+    setCurrentWord(() => getRandomWord());
+    setGuessedLetters([]);
   }
   const alphabetElement = alphabets.split("").map(letter => {
     const isGuessed = guessedLetters.includes(letter);
@@ -46,16 +56,40 @@ const App = () => {
       backgroundColor: isGuessed ? (isCorrect ? "#10A95B" : "#ec664eff") : "#E0E0E0",
     }
     return (
-      <button style={styles} onClick={() => guessLetter(letter)} key={letter}>{letter.toUpperCase()}</button>
+      <button style={styles} disabled={isGameOver} aria-disabled={guessedLetters.includes(letter)} onClick={() => guessLetter(letter)} key={letter}>{letter.toUpperCase()}</button>
     )
+  })
+
+  const gameStatusClass = clsx("game-status", {
+    won: isGameWon,
+    lost: isGameLost,
+    farewell: !isGameOver && isLastGuessIncorrect
   })
 
   return (
     <main>
+      {isGameWon ? <Confetti /> : null}
       <Header />
-      <section className="game-status">
-        <h1>You win!</h1>
-        <p>Well done🎉</p>
+      <section aria-live="polite" className={gameStatusClass}>
+        {isGameOver ? (
+          isGameWon ? (
+            <>
+              <h1>You win!</h1>
+              <p>Well done🎉</p>
+            </>
+          ) : (
+            <>
+              <h1>Game over!</h1>
+              <p>You lose! Better start learning Assembly😭</p>
+            </>
+          )
+        ) : (
+          isLastGuessIncorrect ? (
+            <h1>{getFarewellText(languages[wrongGuessCount - 1].name)}</h1>
+          ) : (
+            null
+          )
+        )} 
       </section>
       <section className="languages-chips">
         {languageElement}
@@ -67,7 +101,7 @@ const App = () => {
         {alphabetElement}
       </section>
       <div className="button-container">
-        {isGameOver ? <button className="new-game">New Game</button> : null}
+        {isGameOver ? <button onClick={startNewGame} className="new-game">New Game</button> : null}
       </div>
     </main>
   )
